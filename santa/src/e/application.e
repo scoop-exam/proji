@@ -9,43 +9,51 @@ feature -- Initialization
     make
         local
             i: INTEGER
-            r : separate REINDEER
-            e : separate ELF
-            s : separate SANTA
+            e: separate ELF
+            r: separate REINDEER
         do
-            io.put_string (">>> BEGIN%N")
+            create santa.make (elves_batch_size, no_reindeers)
 
-            create s.make
-            s.hello
-
+            -- launch elves
             from
                 i := 1
             until
                 i > no_elves
             loop
-                io.put_string (">>> Launching elf%N")
-                create e.make ("elf" + i.out)
-                e.hello
+                create e.make (i, no_failures, santa)
+                launch_elf (e)
                 i := i + 1
             end
 
+            -- launch reindeers
             from
                 i := 1
             until
                 i > no_reindeers
             loop
-                io.put_string (">>> Launching reindeer%N")
-                create r.make ("rnd" + i.out)
-                r.hello
+                create r.make (i, santa)
+                launch_reindeer (r)
                 i := i + 1
             end
-
-            io.put_string (">>> END%N")
         end
 
-feature
+feature {NONE}
+    santa: separate SANTA
     no_reindeers: INTEGER = 9 -- Is fixed
-    no_elves: INTEGER = 20 -- Could be anything
-    max_elves: INTEGER = 3
+    no_elves: INTEGER = 5 -- Could be anything
+    elves_batch_size: INTEGER = 3
+    no_failures: INTEGER = 2
+
+    launch_elf (e: separate ELF)
+        do
+            io.put_string (">>> Launching elf%N")
+            e.live
+        end
+
+    launch_reindeer (r: separate REINDEER)
+        do
+            io.put_string (">>> Launching reindeer%N")
+            r.live
+        end
 
 end

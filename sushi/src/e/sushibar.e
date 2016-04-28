@@ -9,6 +9,7 @@ feature
             seats >= 0
         do
             no_seats := seats
+            can_seat := true
         end
 
 feature
@@ -25,6 +26,7 @@ feature {APPLICATION}
 feature {CUSTOMER}
     no_customers: INTEGER
     no_seats: INTEGER
+    can_seat: BOOLEAN
 
     is_empty: BOOLEAN
         do
@@ -36,22 +38,39 @@ feature {CUSTOMER}
             Result := no_customers = no_seats
         end
 
-    have_a_seat
+    have_a_seat (cid: INTEGER)
         require
-            no_customers < no_seats
+            can_seat
         do
             no_customers := no_customers + 1
+            log (cid, "seat(" + no_customers.out + ")")
+
+            if is_full then
+                log (cid, "FULL")
+                can_seat := false
+            end
         ensure
             no_customers > old no_customers
         end
 
-    leave
+    leave (cid: INTEGER)
         require
             no_customers > 0
         do
             no_customers := no_customers - 1
+            log (cid, "leave(" + no_customers.out + ")")
+
+            if not can_seat and is_empty then
+                can_seat := true
+            end
         ensure
             no_customers < old no_customers
+        end
+
+feature {NONE} -- Utils
+    log (id: INTEGER; event: STRING)
+        do
+            io.put_string (id.out + "." + event + "%N")
         end
 
 invariant

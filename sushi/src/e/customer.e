@@ -1,5 +1,8 @@
 class CUSTOMER
 
+inherit
+    EXECUTION_ENVIRONMENT
+
 create
     make
 
@@ -8,40 +11,34 @@ feature
         require
             i >= 0
             b /= Void
+        local
+            l_time: TIME
+            l_seed: INTEGER
         do
-            id := "c" + i.out
-            max_iter := iter
+            id := i
             sushibar := b
+
+            create l_time.make_now
+            l_seed := l_time.milli_second
+            create rnd.set_seed (l_seed)
         end
 
 feature
     run
         do
-            from
-                sushibar_open (sushibar)
-            until
-                over
-            loop
-                -- acquire exclusive access
-                -- to the sushibar and decide
-                -- the different precondition
-                separate sushibar as sb do
-                    if sb.is_full then
-                        go_eat_when_empty (sb)
-                    else
-                        go_eat_now (sb)
-                    end
-                end
-                come_back (sushibar)
-                no_iter := no_iter + 1
-            end
+            sushibar_open (sushibar)
+
+            go_eat (sushibar)
+            eat
+            come_back (sushibar)
         end
 
 feature {NONE} -- Lifecycle
-    id: STRING
-    no_iter, max_iter: INTEGER
+    id: INTEGER
     sushibar: separate SUSHIBAR
     at_bar: BOOLEAN
+
+    rnd: RANDOM
 
     sushibar_open (sb: separate SUSHIBAR)
         require
@@ -50,33 +47,20 @@ feature {NONE} -- Lifecycle
             -- does nothing
         end
 
-    over: BOOLEAN
-            -- Finish execution?
-        do
-            Result := no_iter >= max_iter
-        end
-
-    go_eat_when_empty (sb: separate SUSHIBAR)
-            -- Goes to eat only when the bar
-            -- is totally empty.
-            -- This should be called when the bar
-            -- is found totally full
+    go_eat (sb: separate SUSHIBAR)
         require
             not at_bar
-            sb.is_empty
+            sb.can_seat
         do
-            eat (sb)
+            sb.have_a_seat (id)
+            at_bar := true
         end
 
-    go_eat_now (sb: separate SUSHIBAR)
-            -- Goes to eat immediately.
-            -- This should be called only
-            -- when the bar is not totally full
-        require
-            not at_bar
-            not sb.is_full
+    eat
+        -- eats
         do
-            eat (sb)
+            rnd.forth
+            sleep ((rnd.item \\ 10) * 1000)
         end
 
     come_back (sb: separate SUSHIBAR)
@@ -84,31 +68,12 @@ feature {NONE} -- Lifecycle
         require
             at_bar
         do
-            sb.leave
+            sb.leave (id)
             at_bar := false
-            log (at_bar)
-        end
-
-feature {NONE} -- Utils
-    log (sl: BOOLEAN)
-        do
-            if sl then
-                io.put_string (id + "." + "seat%N")
-            else
-                io.put_string (id + "." + "leave%N")
-            end
-        end
-
-    eat (sb: separate SUSHIBAR)
-            -- Accessor to have a seat at
-            -- the sushibar
-        do
-            sb.have_a_seat
-            at_bar := true
-            log (at_bar)
         end
 
 invariant
-    no_iter >= 0 and no_iter <= max_iter
+    rnd /= Void
+    sushibar /= Void
 
 end

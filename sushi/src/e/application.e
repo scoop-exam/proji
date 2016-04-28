@@ -15,7 +15,7 @@ feature
             from
                 i := 0
             until
-                i >= no_customers - 1
+                i > no_customers - 1
             loop
                 create l_c.make (i, max_iter, l_sb)
                 separate l_c as c do

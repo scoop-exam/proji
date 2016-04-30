@@ -41,11 +41,11 @@ feature {ELF}
 
 			say ("An elf helped!")
             if no_elves = 0 then
+            	is_busy := FALSE
                 say ("no more elves to help...")
                 if is_xmas then
 					say ("Let's go!")
                 else
-                	is_busy := TRUE
                 	say ("Back to sleep...")
                 end
             end
@@ -94,7 +94,6 @@ feature {NONE}
 
     prepare_sleigh
         do
-            is_busy := true
             say ("sleigh prepared!")
         end
 

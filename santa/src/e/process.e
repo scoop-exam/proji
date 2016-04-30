@@ -31,6 +31,8 @@ feature {NONE} -- Lifecycle
         end
 
     step
+    	require
+			check_application(application)
         deferred
         end
 
@@ -38,9 +40,16 @@ feature {NONE} -- Lifecycle
         do
         end
 
+feature
+	check_application (a: separate APPLICATION) : BOOLEAN
+		do
+			rESULT := a.is_launched
+		end
+
 feature {NONE}
     rnd_seq: RANDOM
     id: STRING
+    application: separate APPLICATION
 
     say (sentence: STRING)
         do

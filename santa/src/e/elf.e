@@ -8,11 +8,12 @@ create
     make
 
 feature
-    make (i, bf: INTEGER; s: separate SANTA)
+    make (app: separate APPLICATION; i, bf: INTEGER; s: separate SANTA)
         require
             s /= Void
             bf >= 1
         do
+        	application := app
             id := "elf" + i.out
             santa := s
             max_build_failures := bf
@@ -60,13 +61,14 @@ feature {NONE}
         require
             not s.is_busy
         do
-            s.enqueue_elf
+        	s.enqueue_elf
         end
 
     get_help (s: separate SANTA)
         require
             s.is_busy
         do
+        	say ("Getting Santa's help...")
             served := no_build_failures = max_build_failures
         end
 

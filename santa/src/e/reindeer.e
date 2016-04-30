@@ -8,10 +8,11 @@ create
     make
 
 feature
-    make (i: INTEGER; s: separate SANTA)
+    make (app: separate APPLICATION; i: INTEGER; s: separate SANTA)
         require
             s /= Void
         do
+        	application := app
             id := "reindeer" + i.out
             santa := s
             setup

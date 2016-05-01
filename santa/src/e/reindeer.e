@@ -53,9 +53,5 @@ feature {NONE}
 
 feature {NONE}
     at_santas: BOOLEAN
-    santa: separate SANTA
-
-invariant
-    santa_attached: santa /= Void
 
 end

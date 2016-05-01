@@ -14,6 +14,13 @@ feature
 feature
     is_busy: BOOLEAN
     is_xmas: BOOLEAN
+    is_open: BOOLEAN
+
+feature
+	open
+		do
+			is_open := TRUE
+		end
 
 feature {ELF}
     no_elves: INTEGER
@@ -72,7 +79,7 @@ feature {REINDEER}
             if no_hitched_reindeers = max_reindeers then
                 is_xmas := true
                 say ("Let's go and spread some gifts guys!")
-                say ("But first, let me help those fuckin' elves outside...")
+                say ("But first, let me help those fuckin' " + no_elves.out + " elves outside...")
                 help_elves
                 say ("ok, done! Let's go!")
             end

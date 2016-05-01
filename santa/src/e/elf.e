@@ -77,10 +77,8 @@ feature {NONE}
 
 feature {NONE}
     served: BOOLEAN
-    santa: separate SANTA
 
 invariant
-    santa_attached: santa /= Void
     no_build_failures >= 0
     no_build_failures <= max_build_failures
 

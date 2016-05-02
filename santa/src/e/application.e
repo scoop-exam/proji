@@ -14,6 +14,17 @@ feature -- Initialization
         do
             create santa.make (elves_batch_size, no_reindeers)
 
+            -- launch reindeers
+            from
+                i := 1
+            until
+                i > no_reindeers
+            loop
+                create r.make (i, santa)
+                launch_reindeer (r)
+                i := i + 1
+            end
+
             -- launch elves
             from
                 i := 1
@@ -25,24 +36,17 @@ feature -- Initialization
                 i := i + 1
             end
 
-            -- launch reindeers
-            from
-                i := 1
-            until
-                i > no_reindeers
-            loop
-                create r.make (i, santa)
-                launch_reindeer (r)
-                i := i + 1
+            separate santa as s do
+            	s.open
             end
         end
 
 feature {NONE}
     santa: separate SANTA
     no_reindeers: INTEGER = 9 -- Is fixed
-    no_elves: INTEGER = 5 -- Could be anything
+    no_elves: INTEGER = 15 -- Could be anything
     elves_batch_size: INTEGER = 3
-    no_failures: INTEGER = 2
+    no_failures: INTEGER = 5
 
     launch_elf (e: separate ELF)
         do

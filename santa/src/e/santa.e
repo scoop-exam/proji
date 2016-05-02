@@ -39,9 +39,15 @@ feature {ELF}
         do
             no_elves := no_elves - 1
 
+			say ("An elf helped!")
             if no_elves = 0 then
-                is_busy := false
-                say ("no more elves to help, back to sleep...")
+            	is_busy := FALSE
+                say ("no more elves to help...")
+                if is_xmas then
+					say ("Let's go!")
+                else
+                	say ("Back to sleep...")
+                end
             end
         end
 
@@ -72,9 +78,10 @@ feature {REINDEER}
             if no_hitched_reindeers = max_reindeers then
                 is_xmas := true
                 say ("Let's go and spread some gifts guys!")
-                say ("But first, let me help those fuckin' elves outside...")
-                help_elves
-                say ("ok, done! Let's go!")
+                if no_elves > 0 then
+                	say ("But first, let me help those fuckin' remaining " + no_elves.out + " elves outside...")
+                	help_elves
+                end
             end
         end
 
@@ -87,7 +94,6 @@ feature {NONE}
 
     prepare_sleigh
         do
-            is_busy := true
             say ("sleigh prepared!")
         end
 

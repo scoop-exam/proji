@@ -20,7 +20,7 @@ feature -- Initialization
             until
                 i > no_elves
             loop
-                create e.make (i, no_failures, santa)
+                create e.make (Current, i, no_failures, santa)
                 launch_elf (e)
                 i := i + 1
             end
@@ -31,11 +31,17 @@ feature -- Initialization
             until
                 i > no_reindeers
             loop
-                create r.make (i, santa)
+                create r.make (Current, i, santa)
                 launch_reindeer (r)
                 i := i + 1
             end
+
+            is_launched := TRUE
+
         end
+
+feature
+	is_launched: BOOLEAN
 
 feature {NONE}
     santa: separate SANTA

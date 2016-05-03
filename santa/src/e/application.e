@@ -37,7 +37,7 @@ feature -- Initialization
             end
 
             separate santa as s do
-            	s.open
+                s.open
             end
         end
 

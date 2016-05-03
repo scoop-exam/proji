@@ -6,7 +6,7 @@ feature {NONE}
 feature
     live
         do
-        	is_santa_open (santa)
+            is_santa_open (santa)
             from until
                 over
             loop
@@ -67,11 +67,11 @@ feature {NONE}
         end
 
     is_santa_open (s: separate SANTA)
-    	require
-    		s.is_open
-    	do
-    		-- does nothing	
-    	end
+        require
+            s.is_open
+        do
+            -- does nothing
+        end
 
 invariant
     rnd_seq_attached: rnd_seq /= Void

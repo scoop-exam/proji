@@ -17,10 +17,10 @@ feature
     is_open: BOOLEAN
 
 feature
-	open
-		do
-			is_open := TRUE
-		end
+    open
+        do
+            is_open := TRUE
+        end
 
 feature {ELF}
     no_elves: INTEGER
@@ -34,11 +34,11 @@ feature {ELF}
 
             if is_xmas or no_elves = max_elves then
                 help_elves
-			end
+            end
 
-			if is_xmas then
-				say ("A fucking elf that was coming during Christmas is arrived! Let me help hime immediately...")
-			end
+            if is_xmas then
+                say ("A fucking elf that was coming during Christmas is arrived! Let me help hime immediately...")
+            end
         end
 
     dequeue_elf

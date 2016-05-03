@@ -41,13 +41,8 @@ feature {NONE} -- Lifecycle
 
 feature {NONE}
     rnd_seq: RANDOM
-    id: STRING
+    id: INTEGER
     santa: separate SANTA
-
-    say (sentence: STRING)
-        do
-            io.put_string (id + " -- " + sentence + "%N")
-        end
 
     choice: BOOLEAN
             -- Use this feature to perform
@@ -75,7 +70,6 @@ feature {NONE}
 
 invariant
     rnd_seq_attached: rnd_seq /= Void
-    id_attached: id /= Void
     santa_attached: santa /= Void
 
 end

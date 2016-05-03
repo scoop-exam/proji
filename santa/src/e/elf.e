@@ -13,7 +13,7 @@ feature
             s /= Void
             bf >= 1
         do
-            id := "elf" + i.out
+            id := i
             santa := s
             max_build_failures := bf
             setup
@@ -33,14 +33,10 @@ feature {NONE}
     step
         do
             if not build_toy then
-                say ("Problem with a toy... Going to Santa's...")
                 go_to_santas (santa)
-                say ("Waiting for Santa's help...")
                 get_help (santa)
-                say ("Thank you Santa! Back to the warehouse!")
                 come_back (santa)
             end
-            --say ("everything ok with toys")
         end
 
     build_toy: BOOLEAN
@@ -60,7 +56,7 @@ feature {NONE}
         require
             not s.is_busy
         do
-            s.enqueue_elf
+            s.enqueue_elf (id)
         end
 
     get_help (s: separate SANTA)
@@ -72,7 +68,7 @@ feature {NONE}
 
     come_back (s: separate SANTA)
         do
-            s.dequeue_elf
+            s.dequeue_elf (id)
         end
 
 feature {NONE}

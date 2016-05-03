@@ -37,7 +37,7 @@ feature -- Initialization
             end
 
             separate santa as s do
-            	s.open
+                s.open
             end
         end
 
@@ -50,13 +50,11 @@ feature {NONE}
 
     launch_elf (e: separate ELF)
         do
-            io.put_string (">>> Launching elf%N")
             e.live
         end
 
     launch_reindeer (r: separate REINDEER)
         do
-            io.put_string (">>> Launching reindeer%N")
             r.live
         end
 

@@ -12,7 +12,7 @@ feature
         require
             s /= Void
         do
-            id := "reindeer" + i.out
+            id := i
             santa := s
             setup
         end
@@ -26,9 +26,7 @@ feature {NONE}
     step
         do
             if wake_up then
-                say ("Awaken, let's go!")
                 go_to_santas (santa)
-                say ("Waiting to get hitched...")
                 get_hitched (santa)
             end
         end
@@ -40,7 +38,7 @@ feature {NONE}
 
     go_to_santas (s: separate SANTA)
         do
-            s.enqueue_reindeer
+            s.enqueue_reindeer (id)
             at_santas := true
         end
 
@@ -48,7 +46,7 @@ feature {NONE}
         require
             s.is_ready
         do
-            s.hitch
+            s.hitch (id)
         end
 
 feature {NONE}

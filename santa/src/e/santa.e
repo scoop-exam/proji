@@ -32,12 +32,13 @@ feature {ELF}
         do
             no_elves := no_elves + 1
 
-            if no_reindeers = max_reindeers then
-                -- should never happen
-                say ("ONCE IN A BLUE MOON")
-            elseif no_elves = max_elves then
+            if is_xmas or no_elves = max_elves then
                 help_elves
-            end
+			end
+
+			if is_xmas then
+				say ("A fucking elf that was coming during Christmas is arrived! Let me help hime immediately...")
+			end
         end
 
     dequeue_elf
@@ -67,7 +68,6 @@ feature {REINDEER}
             if no_reindeers = max_reindeers then
                 say ("all reindeers are here, preparing sleigh...")
                 prepare_sleigh
-                is_ready := true
             end
         end
 
@@ -79,23 +79,22 @@ feature {REINDEER}
             if no_hitched_reindeers = max_reindeers then
                 is_xmas := true
                 say ("Let's go and spread some gifts guys!")
-                say ("But first, let me help those fuckin' " + no_elves.out + " elves outside...")
+                say ("But first, let me help those fuckin' " + no_elves.out + " elves outside...and the other that are coming!")
                 help_elves
-                say ("ok, done! Let's go!")
             end
         end
 
 feature {NONE}
     help_elves
         do
-            is_busy := true
             say ("helping elves!")
+            is_busy := true
         end
 
     prepare_sleigh
         do
-            is_busy := true
             say ("sleigh prepared!")
+            is_ready := true
         end
 
     say (sentence: STRING)

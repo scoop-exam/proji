@@ -1,4 +1,4 @@
-To perform trace checking you should, first of all, get the [Simple Trace Checker](www.github.com/affo/stc):
+To perform trace checking you should, first of all, get the [Simple Trace Checker](https://github.com/affo/stc):
 
 ```
 # in any directory you want

@@ -1,7 +1,9 @@
 deferred class
     PROCESS
 
-feature {NONE}
+inherit
+    EXECUTION_ENVIRONMENT
+
 
 feature
     live
@@ -24,6 +26,13 @@ feature {NONE} -- Lifecycle
             create l_time.make_now
             l_seed := l_time.milli_second
             create rnd_seq.set_seed (l_seed)
+
+
+            l_seed := l_time.hour
+            l_seed := l_seed * 60 + l_time.minute
+            l_seed := l_seed * 60 + l_time.second
+            l_seed := l_seed * 60 + l_time.milli_second
+			create rnd_waiting_seq.set_seed (l_seed)
         end
 
     over: BOOLEAN
@@ -41,6 +50,7 @@ feature {NONE} -- Lifecycle
 
 feature {NONE}
     rnd_seq: RANDOM
+    rnd_waiting_seq: RANDOM
     id: INTEGER
     santa: separate SANTA
 
@@ -61,15 +71,21 @@ feature {NONE}
             end
         end
 
+    random_sleep ( mult : INTEGER_64 )
+    	local
+    		time: INTEGER_64
+    		rnd_fact: REAL
+    	do
+    		rnd_waiting_seq.forth
+    		time := ((rnd_waiting_seq.item \\ mult) + 1) * 1_000_000_000
+    		sleep(time)
+    	end
+
     is_santa_open (s: separate SANTA)
         require
             s.is_open
         do
             -- does nothing
         end
-
-invariant
-    rnd_seq_attached: rnd_seq /= Void
-    santa_attached: santa /= Void
 
 end

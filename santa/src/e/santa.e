@@ -36,7 +36,11 @@ feature {ELF}
             if is_xmas or no_elves = max_elves then
                 help_elves
             end
+        ensure
+        	no_elves = old no_elves + 1
         end
+
+
 
     dequeue_elf (eid: INTEGER)
         require
@@ -49,6 +53,8 @@ feature {ELF}
                 is_busy := false
                 trace ("santa", "sleep")
             end
+        ensure
+        	no_elves = old no_elves - 1
         end
 
 feature {REINDEER}
@@ -68,6 +74,8 @@ feature {REINDEER}
                 trace ("santa", "prepare_sleigh")
                 prepare_sleigh
             end
+        ensure
+        	no_reindeers = old no_reindeers + 1
         end
 
     hitch (rid: INTEGER)
@@ -80,6 +88,8 @@ feature {REINDEER}
                 trace ("santa", "xmas")
                 help_elves
             end
+        ensure
+        	no_hitched_reindeers = old no_hitched_reindeers + 1
         end
 
 feature {NONE}
@@ -92,11 +102,15 @@ feature {NONE}
             end
 
             is_busy := true
+        ensure
+        	is_busy
         end
 
     prepare_sleigh
         do
             is_ready := true
+        ensure
+        	is_ready
         end
 
     trace (actor, event: STRING)

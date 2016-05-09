@@ -26,6 +26,7 @@ feature {NONE}
     step
         do
             if wake_up then
+            	random_sleep (10)
                 go_to_santas (santa)
                 get_hitched (santa)
             end
@@ -37,9 +38,13 @@ feature {NONE}
         end
 
     go_to_santas (s: separate SANTA)
+    	require
+    		not at_santas
         do
             s.enqueue_reindeer (id)
             at_santas := true
+        ensure
+        	at_santas
         end
 
     get_hitched (s: separate SANTA)
@@ -51,5 +56,4 @@ feature {NONE}
 
 feature {NONE}
     at_santas: BOOLEAN
-
 end

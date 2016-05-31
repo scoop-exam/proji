@@ -1,0 +1,72 @@
+\documentclass[12pt,a4paper]{report} % ,twoside,openright
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+\usepackage{etoc}
+% change date format
+\usepackage[ddmmyyyy]{datetime}
+% for correct names
+%\usepackage[italian]{babel}
+
+\linespread{1.5}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{yellow}{RGB}{255, 251, 140}
+
+% defining single line code blocks with monospace font and light-gray backgound (StackOverflow style)
+\newcommand{\code}[1]{\nolinkurl{#1}}
+% note command
+\newcommand{\todo}[1]{\colorbox{yellow}{\textbf{\#TODO} #1}}
+
+% For Images
+\graphicspath{ {images/} }
+\newcommand{\img}[2]{
+    \begin{figure}[h!]
+    \centering{
+       \includegraphics[width=\textwidth]{#1.png}
+    }
+    \caption{#2}
+    \label{fig:#1}
+    \end{figure}
+}
+
+% footer and header
+\usepackage{titleps}
+
+\newpagestyle{main}[\normalsize]{
+    \setheadrule{0.4pt}
+    \sethead{\chaptertitle}{}{\sectiontitle}
+    \setfootrule{0.4pt}
+    \setfoot{
+        % set your footer
+    }
+    {}{\thepage}
+}
+\pagestyle{main}
+
+% BEGIN DOCUMENT
+
+\begin{document}
+\input{title}
+
+\tableofcontents
+%\setcounter{tocdepth}{2}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%\chapter{Awesome chapter}
+\input{chapters/problem}
+\input{chapters/solution}
+
+\end{document}

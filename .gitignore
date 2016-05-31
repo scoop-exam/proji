@@ -2,4 +2,14 @@
 EIFGENs
 *.rc
 
+# LateX doc
+*.pdf
+*.log
+*.aux
+*.fdb_latexmk
+*.fls
+*.toc
 *.out
+
+# vim
+.vimrc

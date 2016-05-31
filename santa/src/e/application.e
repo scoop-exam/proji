@@ -78,6 +78,6 @@ feature {NONE} -- Configuration parameters
         -- How many elves have to be waiting in order to make santa helping them
 
     no_failures: INTEGER = 2
-        -- How many times an elf instance can ask for santa's help
+        -- How many times an elf can fail a toy build and ask for santa's help
 
 end

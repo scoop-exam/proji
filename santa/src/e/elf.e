@@ -1,3 +1,10 @@
+note
+    description : "System's root class"
+    author      : "Michele Guerriero"
+    date        : "2016/05/30"
+    reviewer    : "Lorenzo Affetti"
+    revision    : "1.0.1"
+
 class
     ELF
 
@@ -7,10 +14,11 @@ inherit
 create
     make
 
-feature -- Initialization.
+            
+feature -- Elf Initialization.
 
-    make (i, bf: INTEGER; s: separate SANTA)    
-                -- Creation procedure.
+    make (i, bf: INTEGER; s: separate SANTA)   
+            -- Creation procedure. 
         require
             bf >= 1
         do
@@ -22,9 +30,12 @@ feature -- Initialization.
 
 feature {NONE} -- Elf's implementation
 
+        -- The maximum number of times an elf can ask for santa's help.
+    max_build_failures: INTEGER
+
     over: BOOLEAN
             -- Procedure to decide when to kill an elf. 
-            -- Returns true when is Christman (and then santa has left) or the elf has reached the maximum number of build failures.
+            -- Returns true when is Christmas (and then santa has left) or the elf has reached the maximum number of build failures.
         do
             separate santa as s do
                 Result := served or s.is_xmas
@@ -89,16 +100,13 @@ feature {NONE} -- Elf's implementation
             s.dequeue_elf (id)
         end
 
-feature {NONE} -- Elf's status
+feature -- Elf's status
 
         -- Says if the current elf has reached the maximum bumber of times he can ask for santa's help.
     served: BOOLEAN
 
         -- During the execution this tells how many time the current elf has asked for santa's help.
     no_build_failures: INTEGER
-
-        -- The maximum number of times an elf can ask for santa's help.
-    max_build_failures: INTEGER
 
 invariant
     no_build_failures >= 0

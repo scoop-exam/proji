@@ -1,2 +1,25 @@
 \chapter{Problem Solution}
 \label{chap:solution}
+
+\section{Design Assumption}
+
+- an elf is implemented as an iterative process 
+- we assume the elves batch size and the total number of reideers in the system to be passed as configuration parameters to the program
+- in order to introduce some randomness and some non-determinism we assume that every time an elf build a toy there is a random possibility to end up in a failure (that lead the elf to ask santa for help).
+- we assume the elves to have a fixed maximum number of failures (can be set as a configuration parameter). after an elf reaches this bound he is basically killed (his lyfecycle is stopped) even if it is still not christmas.
+- in order to increase the non-determinism and to make the concurrency more evident, for each elf and for each reindeer we introduce random waiting times at the beginning and the end of their life cycles
+
+
+\section{Solution Description}
+
+- talk about the code design: 
+- introduce the class and BOM diagram
+- focus on the elf class
+- focus on the reindeer class
+- focus on santa class
+- show and comment state diagram
+- sequence to sum up the system behavior
+
+- focus on critical points:
+- what happens when santa leave?
+- .....

@@ -1,16 +1,21 @@
 \section{Problem Solution}
-\label{chap:solution}
+\label{sec:solution}
+
+In this section we are going to describe our proposed solution to the Santa Claus problem using the SCOOP Eiffel framework. 
 
 \subsection{Design Assumption}
+\label{subsec:design}
 
-- an elf is implemented as an iterative process 
-- we assume the elves batch size and the total number of reideers in the system to be passed as configuration parameters to the program
-- in order to introduce some randomness and some non-determinism we assume that every time an elf build a toy there is a random possibility to end up in a failure (that lead the elf to ask santa for help).
-- we assume the elves to have a fixed maximum number of failures (can be set as a configuration parameter). after an elf reaches this bound he is basically killed (his lyfecycle is stopped) even if it is still not christmas.
-- in order to increase the non-determinism and to make the concurrency more evident, for each elf and for each reindeer we introduce random waiting times at the beginning and the end of their life cycles
+Before going into the implementation details let's clarify some of design assumptions we took. Some of them have been taken just to better represent the actual scenario, but could be easily relaxed or avoided at all.
 
+\begin{itemize}
+	\item we assume that a) the total number of elves b) the number of waiting elves that make santa to wake up and 3) the total number of reideers in the system to be passed as configuration parameters to the program.
+	\item an elf is implemented as an iterative process: each iteration represent the action of building a new toy and we assume that every time an elf build a toy there is a random possibility to end up in a failure, that in turn lead the elf to ask santa for help. Moreover an elf has a fixed maximum number of failures, after which he simply stops his lifecycle. This assumption has been took just to realize a more realistic behavior and can easily realxed. Having 10 iterative elves with 3 as the maximum allowed number of failures is the same of having 30 single-iteration elves.
+	\item in order to increase the non-determinism and to make the concurrency more evident, for each elf and for each reindeer we introduce random waiting times at the beginning and the end of their life cycles.
+\end{itemize}
 
 \subsection{Solution Description}
+\label{subsec:sol}
 
 - talk about the code design: 
 - introduce the class and BOM diagram

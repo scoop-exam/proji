@@ -10,7 +10,6 @@ create
 feature
     make (i, bf: INTEGER; s: separate SANTA)
         require
-            s /= Void
             bf >= 1
         do
             id := i
@@ -33,9 +32,12 @@ feature {NONE}
     step
         do
             if not build_toy then
+            	-- time for going to santa
+            	random_sleep (1)
                 go_to_santas (santa)
                 get_help (santa)
                 come_back (santa)
+                random_sleep (1)
             end
         end
 
@@ -50,6 +52,8 @@ feature {NONE}
             end
 
             Result := not l_failure
+        ensure
+        	no_build_failures >= old no_build_failures
         end
 
     go_to_santas (s: separate SANTA)

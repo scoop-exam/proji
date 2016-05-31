@@ -44,9 +44,9 @@ feature -- Initialization
 feature {NONE}
     santa: separate SANTA
     no_reindeers: INTEGER = 9 -- Is fixed
-    no_elves: INTEGER = 15 -- Could be anything
+    no_elves: INTEGER = 20 -- Could be anything
     elves_batch_size: INTEGER = 3
-    no_failures: INTEGER = 5
+    no_failures: INTEGER = 2
 
     launch_elf (e: separate ELF)
         do

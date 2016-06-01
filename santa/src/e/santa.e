@@ -1,28 +1,33 @@
+note
+    description : "[
+        Class that represents the behavior of Santa Claus.
+        Santa represents the shared resource among elves and
+        reindeers. It passes through different states that can be
+        derived from the composition of boolean variables
+        in SANTA's internal state.
+    ]"
+    author      : "Michele Guerriero and Lorenzo Affetti"
+
 class
     SANTA
 
 create
     make
 
-feature -- Santa Initialization.
+feature -- Santa initialization
 
     make (e, r: INTEGER)
-            -- Creation Procedure.
+            -- Creation procedure.
         do
             max_elves := e
             max_reindeers := r
         end
 
-feature
-        -- Makes santa available to start serving elves and reindeers.
-    open
-        do
-            is_open := TRUE
-        end
-
-feature {ELF} -- Elf Consumed Procedures.
+feature {ELF} -- Elf-accessible commands
 
     enqueue_elf (eid: INTEGER)
+            -- Adds an elf to the ones waiting on the threshold.
+            -- If the number reaches the batch size, Santa wakes up.
         require
             no_elves < max_elves
         do
@@ -33,10 +38,14 @@ feature {ELF} -- Elf Consumed Procedures.
                 help_elves
             end
         ensure
-        	no_elves = old no_elves + 1
+            no_elves = old no_elves + 1
         end
 
     dequeue_elf (eid: INTEGER)
+            -- This command has to be invoked by an ELF when
+            -- he/she wants to go back (after being helped).
+            -- When the last elf has been dequeued, Santa is no
+            -- more "busy".
         require
             no_elves > 0
         do
@@ -48,15 +57,14 @@ feature {ELF} -- Elf Consumed Procedures.
                 trace ("santa", "sleep")
             end
         ensure
-        	no_elves = old no_elves - 1
+            no_elves = old no_elves - 1
         end
 
-feature {REINDEER} -- Reindeer Comsumed Procedures
+feature {REINDEER} -- Reindeer-accessible commands
 
     enqueue_reindeer (rid: INTEGER)
-
-            -- Santa adds the reindeer identified by "rid" to the set of arrived reindeers. 
-            -- If all the reindeers arrived, santa prepares the sliegh.
+            -- Adds a reindeer to the ones waiting in the hut.
+            -- If all the reindeers have arrived, Santa prepares the sleigh.
         require
             no_reindeers < max_reindeers
         do
@@ -68,12 +76,15 @@ feature {REINDEER} -- Reindeer Comsumed Procedures
                 prepare_sleigh
             end
         ensure
-        	no_reindeers = old no_reindeers + 1
+            no_reindeers = old no_reindeers + 1
         end
 
     hitch (rid: INTEGER)
-
-            -- Santa hitch the reindeer identified by "rid". After all the reindeers has been hitched santa leaves.
+            -- Command invoked by a REINDEER when all of them are at Santa's.
+            -- After all of the reindeers have been hitched, Santa leaves
+            -- and starts distributing awesome presents to children.
+        require
+            is_ready
         do
             no_hitched_reindeers := no_hitched_reindeers + 1
             trace ("rnd" + rid.out, "hitched")
@@ -84,14 +95,14 @@ feature {REINDEER} -- Reindeer Comsumed Procedures
                 help_elves
             end
         ensure
-        	no_hitched_reindeers = old no_hitched_reindeers + 1
+            no_hitched_reindeers = old no_hitched_reindeers + 1
         end
 
-feature {NONE} -- Internal Procedures
+feature {NONE} -- Internal behavior
 
     help_elves
-
-            -- Santa helps the set of waiting elves. While heling santa appears as budy to toher incoming elves.
+            -- Santa helps the batch of waiting elves.
+            -- This makes Santa "busy".
         do
             if is_xmas then
                 trace ("santa", "force_help")
@@ -105,49 +116,47 @@ feature {NONE} -- Internal Procedures
         end
 
     prepare_sleigh
-
-            -- Prepare the sleigh when all the running reindeers arrived. After that santa is "ready" to start hitching reindeers.
+            -- Prepare the sleigh when all the reindeers arrived.
+            -- This makes Santa "ready" to hitch reindeers.
         do
             is_ready := true
         ensure
             is_ready
         end
 
-feature {NONE} -- Logging 
+feature {NONE} -- Logging
 
     trace (actor, event: STRING)
-            -- Util procedure to print log traces.
+            -- Prints log traces.
         do
             io.put_string (actor + "." + event + "%N")
         end
+feature
+    -- Attributes used to query Santa's state
+    -- (to be used in waiting conditions).
 
-feature -- Santa's status
-
-        -- Says if santa is busy in helping a batch of elves.
     is_busy: BOOLEAN
+        -- Santa is busy in helping a elves.
 
-        -- Says if is Christmas or not according to the number of arrived reindeers.
     is_xmas: BOOLEAN
+        -- It is Christmas or not, i.e. everything is over.
 
-        -- Says if santa is available to start serving elves and reindeers.
-    is_open: BOOLEAN
+    is_ready: BOOLEAN
+        -- Says is santa is ready to start hitching reindeers.
 
-        -- During the execution says how  many reindeers arrived.
+feature -- Access
+
     no_reindeers: INTEGER
+        -- How many reindeers have been enqueued.
 
-        -- During the execution says how many reindeers have been hitched.
     no_hitched_reindeers: INTEGER
+        -- How many reindeers have been hitched.
 
-        -- Says how many reindeers are running in the system.
     max_reindeers: INTEGER
 
-        -- Says is santa is ready to start hitching reindeers.
-    is_ready: BOOLEAN
-
-        -- During the execution says how many elves are waiting to be helped.
     no_elves: INTEGER
+        -- How many elves are waiting to be helped.
 
-        -- Says the maximum number of elves to be waiting before santa starts helping them.
     max_elves: INTEGER
 
 invariant

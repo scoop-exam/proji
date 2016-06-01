@@ -1,3 +1,12 @@
+note
+    description : "[
+        Class that represents an iterative process.
+        A process inits and lives until a stopping condition is reached.
+        The implementation is inpired by the one of
+        Volkan Arslan, Yann Mueller, Piotr Nienaltowski.
+    ]"
+    author      : "Michele Guerriero and Lorenzo Affetti"
+
 deferred class
     PROCESS
 
@@ -5,10 +14,9 @@ inherit
     EXECUTION_ENVIRONMENT
 
 
-feature
+feature -- Access
     live
         do
-            is_santa_open (santa)
             from until
                 over
             loop
@@ -32,7 +40,7 @@ feature {NONE} -- Lifecycle
             l_seed := l_seed * 60 + l_time.minute
             l_seed := l_seed * 60 + l_time.second
             l_seed := l_seed * 60 + l_time.milli_second
-			create rnd_waiting_seq.set_seed (l_seed)
+            create rnd_waiting_seq.set_seed (l_seed)
         end
 
     over: BOOLEAN
@@ -48,15 +56,15 @@ feature {NONE} -- Lifecycle
         do
         end
 
-feature {NONE}
+feature {NONE} -- Utils
     rnd_seq: RANDOM
     rnd_waiting_seq: RANDOM
     id: INTEGER
-    santa: separate SANTA
 
     choice: BOOLEAN
             -- Use this feature to perform
             -- random choices.
+            -- Returns a random boolean.
         local
             l_res: INTEGER
         do
@@ -71,21 +79,17 @@ feature {NONE}
             end
         end
 
-    random_sleep ( mult : INTEGER_64 )
-    	local
-    		time: INTEGER_64
-    		rnd_fact: REAL
-    	do
-    		rnd_waiting_seq.forth
-    		time := ((rnd_waiting_seq.item \\ mult) + 1) * 1_000_000_000
-    		sleep(time)
-    	end
-
-    is_santa_open (s: separate SANTA)
+    random_sleep ( max : INTEGER_64 )
+            -- sleeps for a random number of seconds
+            -- between 1 and max
         require
-            s.is_open
+            max >= 1
+        local
+            time: INTEGER_64
+            rnd_fact: REAL
         do
-            -- does nothing
+            rnd_waiting_seq.forth
+            time := ((rnd_waiting_seq.item \\ max) + 1) * 1_000_000_000
+            sleep(time)
         end
-
 end

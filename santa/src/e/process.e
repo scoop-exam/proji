@@ -80,8 +80,8 @@ feature {NONE} -- Utils
         end
 
     random_sleep ( max : INTEGER_64 )
-            -- sleeps for a random number of seconds
-            -- between 1 and max
+            -- Sleeps for a random number of seconds
+            -- between 1 and max.
         require
             max >= 1
         local

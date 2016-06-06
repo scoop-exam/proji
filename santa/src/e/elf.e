@@ -27,7 +27,7 @@ feature -- Elf initialization
 feature {NONE} -- Elf's lifecycle implementation
 
     max_build_failures: INTEGER
-        -- The maximum number of times an elf can ask for Santa's help.
+            -- The maximum number of times an elf can ask for Santa's help.
 
     over: BOOLEAN
             -- Determines the end of this elf's lifecycle.
@@ -58,7 +58,7 @@ feature {NONE} -- Elf's lifecycle implementation
     build_toy: BOOLEAN
             -- The elf tries to build a toy.
             -- Returns true if the elf succeeds in building,
-            -- False otherwise
+            -- false otherwise.
         local
             l_failure: BOOLEAN
         do
@@ -98,11 +98,11 @@ feature {NONE} -- Elf's lifecycle implementation
             s.dequeue_elf (id)
         end
 
-feature -- Elf's internal state
+feature {NONE} -- Access
 
     santa : separate SANTA
 
-feature -- Access
+feature -- Elf's internal state
 
     served: BOOLEAN
         -- Says if this elf has reached the maximum bumber

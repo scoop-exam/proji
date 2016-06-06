@@ -36,13 +36,14 @@ feature {NONE} -- Reindeer's lifecycle implementation
             --   c) help Santa in making kids happy.
         do
             if wake_up then
-                random_sleep (10) -- the reindeer is sunbathing
+                random_sleep (10) -- the reindeer is sunbathing.
                 go_to_santas (santa)
                 get_hitched (santa)
             end
         end
 
     wake_up: BOOLEAN
+            -- The reindeer decides if to go to santa or not.
         do
             Result := choice
         end
@@ -68,9 +69,11 @@ feature {NONE} -- Reindeer's lifecycle implementation
             s.hitch (id)
         end
 
-feature {NONE} -- Reindeer's internal state
+feature {NONE} -- Access
 
     santa : separate SANTA
+
+feature -- Reindeer's internal state
 
     at_santas: BOOLEAN
 

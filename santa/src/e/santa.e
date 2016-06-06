@@ -131,7 +131,8 @@ feature {NONE} -- Logging
         do
             io.put_string (actor + "." + event + "%N")
         end
-feature
+
+feature -- Santa's internal state
     -- Attributes used to query Santa's state
     -- (to be used in waiting conditions).
 
@@ -144,7 +145,7 @@ feature
     is_ready: BOOLEAN
         -- Says is santa is ready to start hitching reindeers.
 
-feature -- Access
+feature -- System's state
 
     no_reindeers: INTEGER
         -- How many reindeers have been enqueued.
@@ -153,11 +154,13 @@ feature -- Access
         -- How many reindeers have been hitched.
 
     max_reindeers: INTEGER
+        -- How many reindeers run in the system.
 
     no_elves: INTEGER
         -- How many elves are waiting to be helped.
 
     max_elves: INTEGER
+        -- How many elves run in the system.
 
 invariant
     no_elves >= 0 and no_elves <= max_elves

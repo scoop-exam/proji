@@ -8,7 +8,7 @@ class
 create
     make
 
-feature -- System initialization.
+feature -- System initialization
 
     make
             -- Creation procedure.
@@ -19,7 +19,7 @@ feature -- System initialization.
         do
             create santa.make (elves_batch_size, no_reindeers)
 
-                -- make all reindeers and launch them
+                -- Make all reindeers and launch them.
             from
                 i := 1
             until
@@ -32,7 +32,7 @@ feature -- System initialization.
                 i := i + 1
             end
 
-                -- make all elves and launch them
+                -- Make all elves and launch them.
             from
                 i := 1
             until
@@ -49,20 +49,20 @@ feature -- System initialization.
 feature {NONE} -- Configuration parameters
 
     santa: separate SANTA
-        -- The instance of SANTA which serves elves and reindeers
+        -- The instance of SANTA which serves elves and reindeers.
 
     no_reindeers: INTEGER = 9
-        -- The number of reindeers in the system
+        -- The number of reindeers in the system.
 
     no_elves: INTEGER = 20
-        -- The number of elves in the system
+        -- The number of elves in the system.
 
     elves_batch_size: INTEGER = 3
         -- The number of elves to reach to make
-        -- santa wake up and help them
+        -- santa wake up and help them.
 
     no_failures: INTEGER = 2
         -- How many times an elf can fail while
-        -- building a toy build and ask Santa to help him/her
+        -- building a toy and ask Santa to help him/her.
 
 end

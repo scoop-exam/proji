@@ -1,7 +1,7 @@
 \section{Problem Solution}
 \label{sec:solution}
 
-In this section we are going to describe our proposed solution to the Santa Claus problem using the SCOOP Eiffel framework. 
+In this section we describe our proposed solution for the Santa Claus problem using the SCOOP Eiffel framework. 
 
 \subsection{Design Assumption}
 \label{subsec:design}
@@ -9,27 +9,55 @@ In this section we are going to describe our proposed solution to the Santa Clau
 Before going into the implementation details let's clarify some of design assumptions we took. Some of them have been taken just to better represent the actual scenario, but could be easily relaxed or avoided at all.
 
 \begin{itemize}
-	\item we assume that a) the total number of elves b) the number of waiting elves that make santa to wake up and 3) the total number of reideers in the system to be passed as configuration parameters to the program.
-	\item an elf is implemented as an iterative process: each iteration represent the action of building a new toy and we assume that every time an elf build a toy there is a random possibility to end up in a failure, that in turn lead the elf to ask santa for help. Moreover an elf has a fixed maximum number of failures, after which he simply stops his lifecycle. This assumption has been took just to realize a more realistic behavior and can easily realxed. Having 10 iterative elves with 3 as the maximum allowed number of failures is the same of having 30 single-iteration elves.
-	\item in order to increase the non-determinism and to make the concurrency more evident, for each elf and for each reindeer we introduce random waiting times at the beginning and the end of their life cycles.
+	\item we assume that a) the total number of elves in the system b) the total number of reideers in the system and c) the number of waiting elves that make santa to wake up and to help them to be configurable and not limited by the problem specification.
+	\item an elf is implemented as an iterative process: each iteration, or \textit{step}, represents the action of building a new toy and we assume that every time an elf build a toy there is a random possibility to end up in a failure, which in turn lead the elf to ask for santa's help. Moreover an elf has a fixed maximum number of failures, after which he simply stops building toys. This assumption has been took just to design a more realistic behavior and can easily realxed. Having 10 iterative elves with 3 as the maximum allowed number of failures is the same of having 30 single-iteration elves.
+	\item a reindeer is implemented as an iterative process too. In this case the iteration is just a random chance of going to Santa and the lifecycle ends when it actually happens.
+	\item in order to increase the non-determinism and to make the concurrency more evident, for each elf and for each reindeer we introduce random waiting times at the beginning and at the end of their lifecycles.
 \end{itemize}
 
 \subsection{Solution Description}
 \label{subsec:sol}
 
-- talk about the code design: 
-- introduce the class and BOM diagram
-- focus on the elf class
-- focus on the reindeer class
-- focus on santa class
-- show and comment state diagram
-- sequence to sum up the system behavior
+Figure \ref{fig:class_diagram} shows the UML class diagram generated from the source code using Eiffel Studio. 
+According to the problem specification and to our design assumptions, each step of the \texttt{ELF}'s lifecycle is a sequence of 3 calls to \texttt{SANTA}: the \texttt{ELF} \texttt{go\_to\_santa}, \texttt{get\_help} and \texttt{come\_back}. The sequence is performed only if there is a failure in building the toy during the current step.
 
-- focus on critical points:
-- what happens when santa leave?
-- .....
+As for the \texttt{REINDEER}, each step of its lifecycle is a sequence of 2 calls to \texttt{SANTA}: the \texttt{REINDEER} \texttt{go\_to\_santa} and \texttt{get\_hitched}. The sequence is performed only if the \texttt{REINDEER} decides to come back during the current step.
 
-As in figure \ref{fig:class_diagram} and \ref{fig:state_diagram}
+As regard the class \texttt{SANTA}, it first of all keeps track of the system's status with the \textbf{Access} category of attribute features.
+Moreover \texttt{SANTA} acts as the system's logger. Having the logging centralized in the shared accessed resource allow us to get a simple and effective log.
+
+\texttt{SANTA} relevant features are categorized into 3 groups:
+
+\begin{itemize}
+	\item \textbf{Elf-accessible commands:} an ELF calls \texttt{enqueue\_elf} when it \texttt{go\_to\_santa} and \texttt{dequeue\_elf} when it \texttt{come\_back}. 
+	\item \textbf{Reindeer-accesisble commands}: a REINDEER calls \texttt{enqueue\_reindeer} when it \texttt{go\_to\_santa} and hitch when it ask to \texttt{get\_hitched}.
+	\item \textbf{Internal behavior}: internally SANTA \texttt{help\_elves} when the maximum number of waiting elves (\texttt{max\_elves}) is reached and \texttt{prepare\_sleigh} when all the reindeers arrive.
+\end{itemize}
+
+\texttt{SANTA}'s internal state is represented by the following 3 attribute features:
+
+\begin{itemize}
+	\item \texttt{is\_busy}: indicate when \texttt{SANTA} is busy in helping some elves.
+	\item \texttt{is\_ready}: indicate when \texttt{SANTA} is ready to hitch reindeers.
+	\item \texttt{is\_xmas}: indicate if it is Christmas and SANTA has left, then everything is over.
+\end{itemize}
+
+Figure \ref{fig:state_diagram} symbolically reports the state diagram of \texttt{SANTA}.
 
 \img{class_diagram}{The class diagram for Santa Claus problem.}
 \img{state_diagram}{The state diagram for Santa.}
+
+\subsection{The Main Issues}
+
+We believe there are 2 main difficulties in the Santa Claus problem:
+
+\begin{itemize}
+	\item 1) There is a single shared resource that is accessed with different purposes by two distinct entities.
+	\item 2) The shared resource can become unavailable at any point in time, potentially leaving some of its clients (e.g. the elves) in a pending condition.
+\end{itemize}
+
+As regards 1), it was not that difficult to properly model Santa in order to manage the logic of both the elves and the reindeers, making Santa the owner of the whole system's state and the provider of groups of features, specifically dedicated to elves or reindees, which modify the system's state according to the problem logic.
+
+It was instead more complicated to handle the Santa unavailability issue. When it is Christmas, by problem specification it is assured that all the reindeers have been hitched (that is, there is no \texttt{REINDEER} still running). Moreover the termination condition of an \texttt{ELF} is that is has to be Christmas. The problem is that it could happen that \texttt{SANTA} leaves while there are some elves that are in the middle of the execution of the last step of their lifecycle and this can cause starvation scenarios. The main one is when \texttt{SANTA} has left but there are still 2 running elves both enqueued (e.g. arrived at \texttt{SANTA}) and waiting for the third elf to arrive and to wake up \texttt{SANTA}, but actually there is no other running \texttt{ELF}, so the 2 elves will wait forever. 
+In order to solve this issue we decided to adopt a simple policy: when it is Christmas, before leaving \texttt{SANTA} forces the helping of all the currently running elves, that is as soon as an \texttt{ELF} arrives at Santa, it is also helped. Along this path \texttt{SANTA} has basically 2 different behavior in the way it handle elves, before and after Christmas and we assure that when it is Christmas and \texttt{SANTA} leaves, the program terminates.
+

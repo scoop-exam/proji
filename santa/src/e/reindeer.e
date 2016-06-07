@@ -69,11 +69,11 @@ feature {NONE} -- Reindeer's lifecycle implementation
             s.hitch (id)
         end
 
-feature {NONE} -- Access
+feature {NONE} -- Reindeer's internal state
 
     santa : separate SANTA
 
-feature -- Reindeer's internal state
+feature -- Access
 
     at_santas: BOOLEAN
 

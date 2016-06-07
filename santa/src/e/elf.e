@@ -98,11 +98,11 @@ feature {NONE} -- Elf's lifecycle implementation
             s.dequeue_elf (id)
         end
 
-feature {NONE} -- Access
+feature {NONE} -- Elf's internal state
 
     santa : separate SANTA
 
-feature -- Elf's internal state
+feature -- Access
 
     served: BOOLEAN
         -- Says if this elf has reached the maximum bumber

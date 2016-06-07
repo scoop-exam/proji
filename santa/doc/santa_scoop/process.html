@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="ISE EiffelStudio version 15.12.9.8497 GPL Edition - linux-x86-64">
+<meta name="description" content="Class that represents an iterative process. A process inits and lives until a stopping condition is reached. The implementation is inpired by the one of Volkan Arslan, Yann Mueller, Piotr Nienaltowski."/>
+<meta name="author" content="Michele Guerriero and Lorenzo Affetti"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="keywords" content="Eiffel class"/>
+<TITLE>process Text</TITLE>
+<LINK REL="stylesheet" HREF="../default.css" TYPE="text/css">
+<SCRIPT TYPE="text/javascript" SRC="../goto.html"></SCRIPT>
+</HEAD>
+<BODY>
+<P ALIGN="CENTER">Automatic generation produced by ISE Eiffel</P>
+<pre><FORM ONSUBMIT="go_to('../',this.c.value);return false;">
+<TABLE CELLSPACING="5" CELLPADDING="4"><TR>
+<TD CLASS="link1"><A CLASS="link1" HREF="../class_list.html">Classes</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_list.html">Clusters</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_hierarchy.html">Cluster hierarchy</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="process_chart.html">Chart</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="process_links.html">Relations</A></TD>
+<TD CLASS="nolink2">Text</TD>
+<TD CLASS="link2">Go to: <INPUT NAME="c" VALUE="process"></TD>
+</TR></TABLE></FORM><SPAN CLASS="ekeyword">note</SPAN>
+	<SPAN CLASS="eitag">description</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="estring">&quot;</SPAN><SPAN CLASS="estring">[</SPAN>
+		<SPAN CLASS="estring">Class that represents an iterative process.</SPAN>
+		<SPAN CLASS="estring">A process inits and lives until a stopping condition is reached.</SPAN>
+		<SPAN CLASS="estring">The implementation is inpired by the one of</SPAN>
+		<SPAN CLASS="estring">Volkan Arslan, Yann Mueller, Piotr Nienaltowski.</SPAN>
+	<SPAN CLASS="estring">]</SPAN><SPAN CLASS="estring">&quot;</SPAN>
+	<SPAN CLASS="eitag">author</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="estring">&quot;Michele Guerriero and Lorenzo Affetti&quot;</SPAN>
+
+<SPAN CLASS="ekeyword">deferred</SPAN> <SPAN CLASS="ekeyword">class</SPAN> 
+	<A CLASS="eclass" HREF="../santa_scoop/process.html">PROCESS</A>
+
+<SPAN CLASS="ekeyword">inherit</SPAN>
+	<SPAN CLASS="neclass">EXECUTION_ENVIRONMENT</SPAN>
+
+<SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Access</SPAN>
+
+	<A NAME="f_live"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_live">live</A>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="ekeyword">from</SPAN>
+			<SPAN CLASS="ekeyword">until</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/process.html#f_over">over</A>
+			<SPAN CLASS="ekeyword">loop</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/process.html#f_step">step</A>
+			<SPAN CLASS="ekeyword">end</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/process.html#f_wrapup">wrapup</A>
+		<SPAN CLASS="ekeyword">end</SPAN>
+	
+<SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="esymbol">{</SPAN>NONE<SPAN CLASS="esymbol">}</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Lifecycle</SPAN>
+
+	<A NAME="f_setup"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_setup">setup</A>
+		<SPAN CLASS="ekeyword">local</SPAN>
+			<SPAN CLASS="elocal">l_time</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">TIME</SPAN>
+			<SPAN CLASS="elocal">l_seed</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="ekeyword">create</SPAN> <SPAN CLASS="elocal">l_time</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">make_now</SPAN>
+			<SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">l_time</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">milli_second</SPAN>
+			<SPAN CLASS="ekeyword">create</SPAN> <A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_seq">rnd_seq</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">set_seed</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">l_seed</SPAN><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">l_time</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">hour</SPAN>
+			<SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">*</SPAN> <SPAN CLASS="enumber">60</SPAN> <SPAN CLASS="esymbol">+</SPAN> <SPAN CLASS="elocal">l_time</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">minute</SPAN>
+			<SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">*</SPAN> <SPAN CLASS="enumber">60</SPAN> <SPAN CLASS="esymbol">+</SPAN> <SPAN CLASS="elocal">l_time</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">second</SPAN>
+			<SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">l_seed</SPAN> <SPAN CLASS="esymbol">*</SPAN> <SPAN CLASS="enumber">60</SPAN> <SPAN CLASS="esymbol">+</SPAN> <SPAN CLASS="elocal">l_time</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">milli_second</SPAN>
+			<SPAN CLASS="ekeyword">create</SPAN> <A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_waiting_seq">rnd_waiting_seq</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">set_seed</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">l_seed</SPAN><SPAN CLASS="esymbol">)</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_over"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_over">over</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">BOOLEAN</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Should execution terminate now?</SPAN>
+		<SPAN CLASS="ekeyword">deferred</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_step"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_step">step</A>
+		<SPAN CLASS="ekeyword">deferred</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_wrapup"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_wrapup">wrapup</A>
+		<SPAN CLASS="ekeyword">do</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+	
+<SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="esymbol">{</SPAN>NONE<SPAN CLASS="esymbol">}</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Utils</SPAN>
+
+	<A NAME="f_rnd_seq"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_seq">rnd_seq</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">RANDOM</SPAN>
+
+	<A NAME="f_rnd_waiting_seq"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_waiting_seq">rnd_waiting_seq</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">RANDOM</SPAN>
+
+	<A NAME="f_id"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_id">id</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
+
+	<A NAME="f_choice"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_choice">choice</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">BOOLEAN</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Use this feature to perform</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> random choices.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Returns a random boolean.</SPAN>
+		<SPAN CLASS="ekeyword">local</SPAN>
+			<SPAN CLASS="elocal">l_res</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_seq">rnd_seq</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">forth</SPAN>
+			<SPAN CLASS="elocal">l_res</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_seq">rnd_seq</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">item</SPAN> <SPAN CLASS="esymbol">\\</SPAN> <SPAN CLASS="enumber">2</SPAN>
+			<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="elocal">l_res</SPAN> <SPAN CLASS="esymbol">=</SPAN> <SPAN CLASS="enumber">0</SPAN> <SPAN CLASS="ekeyword">then</SPAN>
+				<SPAN CLASS="ekeyword">Result</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="ekeyword">False</SPAN>
+			<SPAN CLASS="ekeyword">else</SPAN>
+				<SPAN CLASS="ekeyword">Result</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="ekeyword">True</SPAN>
+			<SPAN CLASS="ekeyword">end</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_random_sleep"></A><A CLASS="efeature" HREF="../santa_scoop/process.html#f_random_sleep">random_sleep</A> <SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">max</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_64</SPAN><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Sleeps for a random number of seconds</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> between 1 and max.</SPAN>
+		<SPAN CLASS="ekeyword">require</SPAN>
+				<SPAN CLASS="elocal">max</SPAN> <SPAN CLASS="esymbol">&gt;=</SPAN> <SPAN CLASS="enumber">1</SPAN>
+		<SPAN CLASS="ekeyword">local</SPAN>
+			<SPAN CLASS="elocal">time</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_64</SPAN>
+			<SPAN CLASS="elocal">rnd_fact</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">REAL_32</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_waiting_seq">rnd_waiting_seq</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">forth</SPAN>
+			<SPAN CLASS="elocal">time</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/process.html#f_rnd_waiting_seq">rnd_waiting_seq</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">item</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">to_integer_64</SPAN> <SPAN CLASS="esymbol">\\</SPAN> <SPAN CLASS="elocal">max</SPAN><SPAN CLASS="esymbol">)</SPAN> <SPAN CLASS="esymbol">+</SPAN> <SPAN CLASS="enumber">1</SPAN><SPAN CLASS="esymbol">)</SPAN> <SPAN CLASS="esymbol">*</SPAN> <SPAN CLASS="enumber">1000000000</SPAN>
+			<SPAN CLASS="nefeature">sleep</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">time</SPAN><SPAN CLASS="esymbol">)</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+	
+<SPAN CLASS="ekeyword">end</SPAN> <SPAN CLASS="ecomment">--</SPAN> <SPAN CLASS="ecomment">class </SPAN><A CLASS="eclass" HREF="../santa_scoop/process.html">PROCESS</A><FORM ONSUBMIT="go_to('../',this.c.value);return false;">
+<TABLE CELLSPACING="5" CELLPADDING="4"><TR>
+<TD CLASS="link1"><A CLASS="link1" HREF="../class_list.html">Classes</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_list.html">Clusters</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_hierarchy.html">Cluster hierarchy</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="process_chart.html">Chart</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="process_links.html">Relations</A></TD>
+<TD CLASS="nolink2">Text</TD>
+<TD CLASS="link2">Go to: <INPUT NAME="c" VALUE="process"></TD>
+</TR></TABLE></FORM></pre>
+<P ALIGN="CENTER"> &#045;&#045; Generated by ISE Eiffel &#045;&#045; 
+<BR>For more details: <A HREF="http://www.eiffel.com">www.eiffel.com</A></P>
+</BODY>
+</HTML>
+

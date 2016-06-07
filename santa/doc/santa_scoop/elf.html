@@ -1,0 +1,153 @@
+<HTML>
+<HEAD>
+<META NAME="generator" CONTENT="ISE EiffelStudio version 15.12.9.8497 GPL Edition - linux-x86-64">
+<meta name="description" content="Class that represents the behavior of an elf."/>
+<meta name="author" content="Michele Guerriero and Lorenzo Affetti"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="keywords" content="Eiffel class"/>
+<TITLE>elf Text</TITLE>
+<LINK REL="stylesheet" HREF="../default.css" TYPE="text/css">
+<SCRIPT TYPE="text/javascript" SRC="../goto.html"></SCRIPT>
+</HEAD>
+<BODY>
+<P ALIGN="CENTER">Automatic generation produced by ISE Eiffel</P>
+<pre><FORM ONSUBMIT="go_to('../',this.c.value);return false;">
+<TABLE CELLSPACING="5" CELLPADDING="4"><TR>
+<TD CLASS="link1"><A CLASS="link1" HREF="../class_list.html">Classes</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_list.html">Clusters</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_hierarchy.html">Cluster hierarchy</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="elf_chart.html">Chart</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="elf_links.html">Relations</A></TD>
+<TD CLASS="nolink2">Text</TD>
+<TD CLASS="link2">Go to: <INPUT NAME="c" VALUE="elf"></TD>
+</TR></TABLE></FORM><SPAN CLASS="ekeyword">note</SPAN>
+	<SPAN CLASS="eitag">description</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="estring">&quot;Class that represents the behavior of an elf.&quot;</SPAN>
+	<SPAN CLASS="eitag">author</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="estring">&quot;Michele Guerriero and Lorenzo Affetti&quot;</SPAN>
+
+<SPAN CLASS="ekeyword">class</SPAN> 
+	<A CLASS="eclass" HREF="../santa_scoop/elf.html">ELF</A>
+
+<SPAN CLASS="ekeyword">inherit</SPAN>
+	<A CLASS="eclass" HREF="../santa_scoop/process.html">PROCESS</A>
+
+<SPAN CLASS="ekeyword">create</SPAN> 
+	<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_make">make</A>
+
+<SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Elf initialization</SPAN>
+
+	<A NAME="f_make"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_make">make</A> <SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">i</SPAN><SPAN CLASS="esymbol">,</SPAN> <SPAN CLASS="elocal">bf</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN><SPAN CLASS="esymbol">;</SPAN> <SPAN CLASS="elocal">s</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/santa.html">SANTA</A><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Creation procedure.</SPAN>
+		<SPAN CLASS="ekeyword">require</SPAN>
+				<SPAN CLASS="elocal">bf</SPAN> <SPAN CLASS="esymbol">&gt;=</SPAN> <SPAN CLASS="enumber">1</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/process.html#f_id">id</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">i</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_santa">santa</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">s</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_max_build_failures">max_build_failures</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">bf</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/process.html#f_setup">setup</A>
+		<SPAN CLASS="ekeyword">end</SPAN>
+	
+<SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="esymbol">{</SPAN>NONE<SPAN CLASS="esymbol">}</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Elf's lifecycle implementation</SPAN>
+
+	<A NAME="f_max_build_failures"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_max_build_failures">max_build_failures</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The maximum number of times an elf can ask for Santa's help.</SPAN>
+
+	<A NAME="f_over"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_over">over</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">BOOLEAN</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Determines the end of this elf's lifecycle.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Returns true when it is Christmas (and then Santa has left)</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> or the elf has reached the maximum number of build failures.</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_santa">santa</A> <SPAN CLASS="ekeyword">as</SPAN> s <SPAN CLASS="ekeyword">do</SPAN>
+				<SPAN CLASS="ekeyword">Result</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_served">served</A> <SPAN CLASS="ekeyword">or</SPAN> <SPAN CLASS="elocal">s</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/santa.html#f_is_xmas">is_xmas</A>
+			<SPAN CLASS="ekeyword">end</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_step"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_step">step</A>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> At each iteration the elf tries to build a toy.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> If he/she fails:</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> &nbsp;&nbsp;a) the elf goes to santa asking for help</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> &nbsp;&nbsp;b) the elf receives santa's help</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> &nbsp;&nbsp;c) the elf comes back to the warehouse and restarts working</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="ekeyword">not</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_build_toy">build_toy</A> <SPAN CLASS="ekeyword">then</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/process.html#f_random_sleep">random_sleep</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="enumber">1</SPAN><SPAN CLASS="esymbol">)</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_go_to_santas">go_to_santas</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_santa">santa</A><SPAN CLASS="esymbol">)</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_get_help">get_help</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_santa">santa</A><SPAN CLASS="esymbol">)</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_come_back">come_back</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_santa">santa</A><SPAN CLASS="esymbol">)</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/process.html#f_random_sleep">random_sleep</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="enumber">1</SPAN><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="ekeyword">end</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_build_toy"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_build_toy">build_toy</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">BOOLEAN</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The elf tries to build a toy.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Returns true if the elf succeeds in building,</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> false otherwise.</SPAN>
+		<SPAN CLASS="ekeyword">local</SPAN>
+			<SPAN CLASS="elocal">l_failure</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">BOOLEAN</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="elocal">l_failure</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="ekeyword">not</SPAN> <A CLASS="efeature" HREF="../santa_scoop/process.html#f_choice">choice</A>
+			<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="elocal">l_failure</SPAN> <SPAN CLASS="ekeyword">then</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A> <SPAN CLASS="esymbol">:=</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A> <SPAN CLASS="esymbol">+</SPAN> <SPAN CLASS="enumber">1</SPAN>
+			<SPAN CLASS="ekeyword">end</SPAN>
+			<SPAN CLASS="ekeyword">Result</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="ekeyword">not</SPAN> <SPAN CLASS="elocal">l_failure</SPAN>
+		<SPAN CLASS="ekeyword">ensure</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A> <SPAN CLASS="esymbol">&gt;=</SPAN> <SPAN CLASS="ekeyword">old</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_go_to_santas"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_go_to_santas">go_to_santas</A> <SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">s</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/santa.html">SANTA</A><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The elf goes to Sants's to ask for help.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The elf must wait for santa not to be busy.</SPAN>
+		<SPAN CLASS="ekeyword">require</SPAN>
+				<SPAN CLASS="ekeyword">not</SPAN> <SPAN CLASS="elocal">s</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/santa.html#f_is_busy">is_busy</A>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="elocal">s</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/santa.html#f_enqueue_elf">enqueue_elf</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/process.html#f_id">id</A><SPAN CLASS="esymbol">)</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_get_help"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_get_help">get_help</A> <SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">s</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/santa.html">SANTA</A><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Santa helps the elf.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> In order to get help, the elf must</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> wait for Santa to be busy.</SPAN>
+		<SPAN CLASS="ekeyword">require</SPAN>
+				<SPAN CLASS="elocal">s</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/santa.html#f_is_busy">is_busy</A>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_served">served</A> <SPAN CLASS="esymbol">:=</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A> <SPAN CLASS="esymbol">=</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_max_build_failures">max_build_failures</A>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_come_back"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_come_back">come_back</A> <SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">s</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/santa.html">SANTA</A><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The elf comes back.</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="elocal">s</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/santa.html#f_dequeue_elf">dequeue_elf</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/process.html#f_id">id</A><SPAN CLASS="esymbol">)</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+	
+<SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="esymbol">{</SPAN>NONE<SPAN CLASS="esymbol">}</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Elf's internal state</SPAN>
+
+	<A NAME="f_santa"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_santa">santa</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/santa.html">SANTA</A>
+	
+<SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Access</SPAN>
+
+	<A NAME="f_served"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_served">served</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">BOOLEAN</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Says if this elf has reached the maximum bumber</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> of times he can ask Santa to help.</SPAN>
+
+	<A NAME="f_no_build_failures"></A><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> How many times the elf has failed while</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> building a toy.</SPAN>
+	
+<SPAN CLASS="ekeyword">invariant</SPAN>
+		<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A> <SPAN CLASS="esymbol">&gt;=</SPAN> <SPAN CLASS="enumber">0</SPAN>
+		<A CLASS="efeature" HREF="../santa_scoop/elf.html#f_no_build_failures">no_build_failures</A> <SPAN CLASS="esymbol">&lt;=</SPAN> <A CLASS="efeature" HREF="../santa_scoop/elf.html#f_max_build_failures">max_build_failures</A>
+
+<SPAN CLASS="ekeyword">end</SPAN> <SPAN CLASS="ecomment">--</SPAN> <SPAN CLASS="ecomment">class </SPAN><A CLASS="eclass" HREF="../santa_scoop/elf.html">ELF</A><FORM ONSUBMIT="go_to('../',this.c.value);return false;">
+<TABLE CELLSPACING="5" CELLPADDING="4"><TR>
+<TD CLASS="link1"><A CLASS="link1" HREF="../class_list.html">Classes</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_list.html">Clusters</A></TD>
+<TD CLASS="link1"><A CLASS="link1" HREF="../cluster_hierarchy.html">Cluster hierarchy</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="elf_chart.html">Chart</A></TD>
+<TD CLASS="link2"><A CLASS="link2" HREF="elf_links.html">Relations</A></TD>
+<TD CLASS="nolink2">Text</TD>
+<TD CLASS="link2">Go to: <INPUT NAME="c" VALUE="elf"></TD>
+</TR></TABLE></FORM></pre>
+<P ALIGN="CENTER"> &#045;&#045; Generated by ISE Eiffel &#045;&#045; 
+<BR>For more details: <A HREF="http://www.eiffel.com">www.eiffel.com</A></P>
+</BODY>
+</HTML>
+

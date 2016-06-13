@@ -41,7 +41,7 @@ feature {NONE} -- Lifecycle
             l_seed := l_seed * 60 + l_time.milli_second
             create rnd_seq.set_seed (l_seed)
         ensure
-            rnd_seq \= Void
+            rnd_seq /= Void
         end
 
     over: BOOLEAN

@@ -17,12 +17,13 @@ inherit
 feature -- Access
     live
         do
-            from until
+            from
+                setup
+            until
                 over
             loop
                 step
             end
-            wrapup
         end
 
 feature {NONE} -- Lifecycle
@@ -32,15 +33,11 @@ feature {NONE} -- Lifecycle
             l_seed: INTEGER
         do
             create l_time.make_now
-            l_seed := l_time.milli_second
-            create rnd_seq.set_seed (l_seed)
-
-
             l_seed := l_time.hour
             l_seed := l_seed * 60 + l_time.minute
             l_seed := l_seed * 60 + l_time.second
             l_seed := l_seed * 60 + l_time.milli_second
-            create rnd_waiting_seq.set_seed (l_seed)
+            create rnd_seq.set_seed (l_seed)
         end
 
     over: BOOLEAN
@@ -52,13 +49,8 @@ feature {NONE} -- Lifecycle
         deferred
         end
 
-    wrapup
-        do
-        end
-
 feature {NONE} -- Utils
-    rnd_seq: RANDOM
-    rnd_waiting_seq: RANDOM
+    rnd_seq: detachable RANDOM
     id: INTEGER
 
     choice: BOOLEAN
@@ -68,28 +60,29 @@ feature {NONE} -- Utils
         local
             l_res: INTEGER
         do
-            rnd_seq.forth
-            l_res := rnd_seq.item \\ 2
-
-            -- TODO find a more Eiffel idiomatic way, please
-            if l_res = 0 then
-                Result := false
+            if attached rnd_seq as r then
+                r.forth
+                l_res := r.item \\ 2
+                Result := l_res = 0
             else
-                Result := true
+                Result := False
             end
         end
 
-    random_sleep ( max : INTEGER_64 )
+    random_sleep (max : INTEGER_64)
             -- Sleeps for a random number of seconds
             -- between 1 and max.
         require
             max >= 1
         local
             time: INTEGER_64
-            rnd_fact: REAL
         do
-            rnd_waiting_seq.forth
-            time := ((rnd_waiting_seq.item \\ max) + 1) * 1_000_000_000
+            if attached rnd_seq as r then
+                r.forth
+                time := ((r.item \\ max) + 1) * 1_000_000_000
+            else
+                time := 1_000_000_000
+            end
             sleep(time)
         end
 end

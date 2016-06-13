@@ -18,7 +18,6 @@ feature -- Reindeer initialization
         do
             id := i
             santa := s
-            setup
         end
 
 feature {NONE} -- Reindeer's lifecycle implementation

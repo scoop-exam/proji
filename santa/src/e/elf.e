@@ -21,7 +21,6 @@ feature -- Elf initialization
             id := i
             santa := s
             max_build_failures := bf
-            setup
         end
 
 feature {NONE} -- Elf's lifecycle implementation

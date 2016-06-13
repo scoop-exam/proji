@@ -16,6 +16,7 @@ inherit
 
 feature -- Access
     live
+            -- Starts the lifecycle
         do
             from
                 setup
@@ -28,6 +29,7 @@ feature -- Access
 
 feature {NONE} -- Lifecycle
     setup
+            -- Sets internal attributes accordingly
         local
             l_time: TIME
             l_seed: INTEGER
@@ -38,6 +40,8 @@ feature {NONE} -- Lifecycle
             l_seed := l_seed * 60 + l_time.second
             l_seed := l_seed * 60 + l_time.milli_second
             create rnd_seq.set_seed (l_seed)
+        ensure
+            rnd_seq \= Void
         end
 
     over: BOOLEAN
@@ -46,6 +50,8 @@ feature {NONE} -- Lifecycle
         end
 
     step
+            -- Core of the lifecycle.
+            -- Called at each iteration.
         deferred
         end
 

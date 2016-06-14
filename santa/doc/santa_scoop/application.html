@@ -1,6 +1,6 @@
 <HTML>
 <HEAD>
-<META NAME="generator" CONTENT="ISE EiffelStudio version 15.12.9.8497 GPL Edition - linux-x86-64">
+<META NAME="generator" CONTENT="ISE EiffelStudio version 15.12.9.8497 GPL Edition - win64">
 <meta name="description" content="System's root class."/>
 <meta name="author" content="Michele Guerriero and Lorenzo Affetti"/>
 <meta name="keywords" content="Eiffel class"/>
@@ -27,6 +27,9 @@
 <SPAN CLASS="ekeyword">class</SPAN> 
 	<A CLASS="eclass" HREF="../santa_scoop/application.html">APPLICATION</A>
 
+<SPAN CLASS="ekeyword">inherit</SPAN>
+	<SPAN CLASS="neclass">ARGUMENTS</SPAN>
+
 <SPAN CLASS="ekeyword">create</SPAN> 
 	<A CLASS="efeature" HREF="../santa_scoop/application.html#f_make">make</A>
 
@@ -34,18 +37,58 @@
 
 	<A NAME="f_make"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_make">make</A>
 			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Creation procedure.</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="ekeyword">if</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_parse_args">parse_args</A> <SPAN CLASS="ekeyword">then</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/application.html#f_print_params">print_params</A>
+				<A CLASS="efeature" HREF="../santa_scoop/application.html#f_init">init</A>
+			<SPAN CLASS="ekeyword">else</SPAN>
+				<A CLASS="efeature" HREF="../santa_scoop/application.html#f_print_help">print_help</A>
+			<SPAN CLASS="ekeyword">end</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_parse_args"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_parse_args">parse_args</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">BOOLEAN</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="ekeyword">attached</SPAN> <SPAN CLASS="nefeature">separate_character_option_value</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="echar">'h'</SPAN><SPAN CLASS="esymbol">)</SPAN> <SPAN CLASS="ekeyword">as</SPAN> h <SPAN CLASS="ekeyword">then</SPAN>
+				<SPAN CLASS="ekeyword">Result</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="ekeyword">False</SPAN>
+			<SPAN CLASS="ekeyword">else</SPAN>
+				<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="ekeyword">attached</SPAN> <SPAN CLASS="nefeature">separate_character_option_value</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="echar">'r'</SPAN><SPAN CLASS="esymbol">)</SPAN> <SPAN CLASS="ekeyword">as</SPAN> r <SPAN CLASS="ekeyword">then</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">no_reindeers</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">r</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">to_integer</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">abs</SPAN>
+				<SPAN CLASS="ekeyword">else</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">no_reindeers</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="enumber">9</SPAN>
+				<SPAN CLASS="ekeyword">end</SPAN>
+				<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="ekeyword">attached</SPAN> <SPAN CLASS="nefeature">separate_character_option_value</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="echar">'e'</SPAN><SPAN CLASS="esymbol">)</SPAN> <SPAN CLASS="ekeyword">as</SPAN> e <SPAN CLASS="ekeyword">then</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_elves">no_elves</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">e</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">to_integer</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">abs</SPAN>
+				<SPAN CLASS="ekeyword">else</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_elves">no_elves</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="enumber">20</SPAN>
+				<SPAN CLASS="ekeyword">end</SPAN>
+				<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="ekeyword">attached</SPAN> <SPAN CLASS="nefeature">separate_character_option_value</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="echar">'b'</SPAN><SPAN CLASS="esymbol">)</SPAN> <SPAN CLASS="ekeyword">as</SPAN> b <SPAN CLASS="ekeyword">then</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_elves_batch_size">elves_batch_size</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">b</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">to_integer</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">abs</SPAN>
+				<SPAN CLASS="ekeyword">else</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_elves_batch_size">elves_batch_size</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="enumber">3</SPAN>
+				<SPAN CLASS="ekeyword">end</SPAN>
+				<SPAN CLASS="ekeyword">if</SPAN> <SPAN CLASS="ekeyword">attached</SPAN> <SPAN CLASS="nefeature">separate_character_option_value</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="echar">'f'</SPAN><SPAN CLASS="esymbol">)</SPAN> <SPAN CLASS="ekeyword">as</SPAN> f <SPAN CLASS="ekeyword">then</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_failures">no_failures</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="elocal">f</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">to_integer</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">abs</SPAN>
+				<SPAN CLASS="ekeyword">else</SPAN>
+					<A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_failures">no_failures</A> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="enumber">2</SPAN>
+				<SPAN CLASS="ekeyword">end</SPAN>
+				<SPAN CLASS="ekeyword">Result</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="ekeyword">True</SPAN>
+			<SPAN CLASS="ekeyword">end</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_init"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_init">init</A>
 		<SPAN CLASS="ekeyword">local</SPAN>
 			<SPAN CLASS="elocal">i</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
 			<SPAN CLASS="elocal">e</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/elf.html">ELF</A>
 			<SPAN CLASS="elocal">r</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/reindeer.html">REINDEER</A>
+			<SPAN CLASS="elocal">santa</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/santa.html">SANTA</A>
 		<SPAN CLASS="ekeyword">do</SPAN>
-			<SPAN CLASS="ekeyword">create</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_santa">santa</A><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/santa.html#f_make">make</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/application.html#f_elves_batch_size">Elves_batch_size</A><SPAN CLASS="esymbol">,</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">No_reindeers</A><SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="ekeyword">create</SPAN> <SPAN CLASS="elocal">santa</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/santa.html#f_make">make</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><A CLASS="efeature" HREF="../santa_scoop/application.html#f_elves_batch_size">elves_batch_size</A><SPAN CLASS="esymbol">,</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">no_reindeers</A><SPAN CLASS="esymbol">)</SPAN>
 			<SPAN CLASS="ekeyword">from</SPAN>
 				<SPAN CLASS="elocal">i</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="enumber">1</SPAN>
 			<SPAN CLASS="ekeyword">until</SPAN>
-				<SPAN CLASS="elocal">i</SPAN> <SPAN CLASS="esymbol">&gt;</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">No_reindeers</A>
+				<SPAN CLASS="elocal">i</SPAN> <SPAN CLASS="esymbol">&gt;</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">no_reindeers</A>
 			<SPAN CLASS="ekeyword">loop</SPAN>
-				<SPAN CLASS="ekeyword">create</SPAN> <SPAN CLASS="elocal">r</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/reindeer.html#f_make">make</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">i</SPAN><SPAN CLASS="esymbol">,</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_santa">santa</A><SPAN CLASS="esymbol">)</SPAN>
+				<SPAN CLASS="ekeyword">create</SPAN> <SPAN CLASS="elocal">r</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/reindeer.html#f_make">make</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">i</SPAN><SPAN CLASS="esymbol">,</SPAN> <SPAN CLASS="elocal">santa</SPAN><SPAN CLASS="esymbol">)</SPAN>
 				<SPAN CLASS="ekeyword">separate</SPAN> <SPAN CLASS="elocal">r</SPAN> <SPAN CLASS="ekeyword">as</SPAN> sr <SPAN CLASS="ekeyword">do</SPAN>
 					<SPAN CLASS="elocal">sr</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/process.html#f_live">live</A>
 				<SPAN CLASS="ekeyword">end</SPAN>
@@ -54,9 +97,9 @@
 			<SPAN CLASS="ekeyword">from</SPAN>
 				<SPAN CLASS="elocal">i</SPAN> <SPAN CLASS="esymbol">:=</SPAN> <SPAN CLASS="enumber">1</SPAN>
 			<SPAN CLASS="ekeyword">until</SPAN>
-				<SPAN CLASS="elocal">i</SPAN> <SPAN CLASS="esymbol">&gt;</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_elves">No_elves</A>
+				<SPAN CLASS="elocal">i</SPAN> <SPAN CLASS="esymbol">&gt;</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_elves">no_elves</A>
 			<SPAN CLASS="ekeyword">loop</SPAN>
-				<SPAN CLASS="ekeyword">create</SPAN> <SPAN CLASS="elocal">e</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_make">make</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">i</SPAN><SPAN CLASS="esymbol">,</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_failures">No_failures</A><SPAN CLASS="esymbol">,</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_santa">santa</A><SPAN CLASS="esymbol">)</SPAN>
+				<SPAN CLASS="ekeyword">create</SPAN> <SPAN CLASS="elocal">e</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/elf.html#f_make">make</A><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">i</SPAN><SPAN CLASS="esymbol">,</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_failures">no_failures</A><SPAN CLASS="esymbol">,</SPAN> <SPAN CLASS="elocal">santa</SPAN><SPAN CLASS="esymbol">)</SPAN>
 				<SPAN CLASS="ekeyword">separate</SPAN> <SPAN CLASS="elocal">e</SPAN> <SPAN CLASS="ekeyword">as</SPAN> se <SPAN CLASS="ekeyword">do</SPAN>
 					<SPAN CLASS="elocal">se</SPAN><SPAN CLASS="edot">.</SPAN><A CLASS="efeature" HREF="../santa_scoop/process.html#f_live">live</A>
 				<SPAN CLASS="ekeyword">end</SPAN>
@@ -66,22 +109,44 @@
 	
 <SPAN CLASS="ekeyword">feature</SPAN> <SPAN CLASS="esymbol">{</SPAN>NONE<SPAN CLASS="esymbol">}</SPAN> <SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> Configuration parameters</SPAN>
 
-	<A NAME="f_santa"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_santa">santa</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="ekeyword">separate</SPAN> <A CLASS="eclass" HREF="../santa_scoop/santa.html">SANTA</A>
-			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The instance of SANTA which serves elves and reindeers.</SPAN>
+	<A NAME="f_no_reindeers"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">no_reindeers</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The number of reindeers in the system (defaults to 9).</SPAN>
 
-	<A NAME="f_no_reindeers"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">No_reindeers</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN> <SPAN CLASS="esymbol">=</SPAN> <SPAN CLASS="enumber">9</SPAN>
-			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The number of reindeers in the system.</SPAN>
+	<A NAME="f_no_elves"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_elves">no_elves</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The number of elves in the system (defaults to 20).</SPAN>
 
-	<A NAME="f_no_elves"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_elves">No_elves</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN> <SPAN CLASS="esymbol">=</SPAN> <SPAN CLASS="enumber">20</SPAN>
-			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The number of elves in the system.</SPAN>
-
-	<A NAME="f_elves_batch_size"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_elves_batch_size">Elves_batch_size</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN> <SPAN CLASS="esymbol">=</SPAN> <SPAN CLASS="enumber">3</SPAN>
+	<A NAME="f_elves_batch_size"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_elves_batch_size">elves_batch_size</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
 			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> The number of elves to reach to make</SPAN>
-			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> santa wake up and help them.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> santa wake up and help them (defaults to 3).</SPAN>
 
-	<A NAME="f_no_failures"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_failures">No_failures</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN> <SPAN CLASS="esymbol">=</SPAN> <SPAN CLASS="enumber">2</SPAN>
+	<A NAME="f_no_failures"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_failures">no_failures</A><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">INTEGER_32</SPAN>
 			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> How many times an elf can fail while</SPAN>
-			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> building a toy and ask Santa to help him/her.</SPAN>
+			<SPAN CLASS="ecomment">--</SPAN><SPAN CLASS="ecomment"> building a toy and ask Santa to help him/her (defaults to 2)</SPAN>
+
+	<A NAME="f_print_help"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_print_help">print_help</A>
+		<SPAN CLASS="ekeyword">local</SPAN>
+			<SPAN CLASS="elocal">help</SPAN><SPAN CLASS="esymbol">:</SPAN> <SPAN CLASS="neclass">STRING_8</SPAN>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="elocal">help</SPAN> <SPAN CLASS="esymbol">:=</SPAN> &quot;[
+				Launches the Santa Claus problem.
+				The available options are:
+				    -h      Displays this help message
+				
+				    -r      The number of reindeers
+				    -e      The number of elves
+				    -b      The batch size for elves
+				    -f      The maximum number of failures for each elf
+			]<SPAN CLASS="estring">&quot;</SPAN>
+			<SPAN CLASS="nefeature">Io</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">put_string</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN><SPAN CLASS="elocal">help</SPAN> <SPAN CLASS="esymbol">+</SPAN> &quot;%N&quot;<SPAN CLASS="esymbol">)</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
+
+	<A NAME="f_print_params"></A><A CLASS="efeature" HREF="../santa_scoop/application.html#f_print_params">print_params</A>
+		<SPAN CLASS="ekeyword">do</SPAN>
+			<SPAN CLASS="nefeature">Io</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">put_string</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN>&quot;%T#reindeers: &quot; <SPAN CLASS="esymbol">+</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_reindeers">no_reindeers</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">out</SPAN> <SPAN CLASS="esymbol">+</SPAN> &quot;%N&quot;<SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="nefeature">Io</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">put_string</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN>&quot;%T#elves: &quot; <SPAN CLASS="esymbol">+</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_elves">no_elves</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">out</SPAN> <SPAN CLASS="esymbol">+</SPAN> &quot;%N&quot;<SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="nefeature">Io</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">put_string</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN>&quot;%Tbatch size: &quot; <SPAN CLASS="esymbol">+</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_elves_batch_size">elves_batch_size</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">out</SPAN> <SPAN CLASS="esymbol">+</SPAN> &quot;%N&quot;<SPAN CLASS="esymbol">)</SPAN>
+			<SPAN CLASS="nefeature">Io</SPAN><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">put_string</SPAN><SPAN CLASS="esymbol"> </SPAN><SPAN CLASS="esymbol">(</SPAN>&quot;%T#failures: &quot; <SPAN CLASS="esymbol">+</SPAN> <A CLASS="efeature" HREF="../santa_scoop/application.html#f_no_failures">no_failures</A><SPAN CLASS="edot">.</SPAN><SPAN CLASS="nefeature">out</SPAN> <SPAN CLASS="esymbol">+</SPAN> &quot;%N%N&quot;<SPAN CLASS="esymbol">)</SPAN>
+		<SPAN CLASS="ekeyword">end</SPAN>
 	
 <SPAN CLASS="ekeyword">end</SPAN> <SPAN CLASS="ecomment">--</SPAN> <SPAN CLASS="ecomment">class </SPAN><A CLASS="eclass" HREF="../santa_scoop/application.html">APPLICATION</A><FORM ONSUBMIT="go_to('../',this.c.value);return false;">
 <TABLE CELLSPACING="5" CELLPADDING="4"><TR>
